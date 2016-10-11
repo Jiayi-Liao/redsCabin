@@ -1,0 +1,23 @@
+{% load static %}
+
+
+<html>
+<head>
+    <link href="{% static 'redisView/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'redisView/css/mainUI.css' %}" rel="stylesheet"/>
+    <script src="{% static 'redisView/js/jquery-2.2.2.js' %} "></script>
+</head>
+<body>
+<div class="page-header">
+    <h1><a href="/">RedsUI</a></h1>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

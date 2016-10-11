@@ -1,0 +1,27 @@
+{% extends 'redisView/base.html' %}
+
+
+
+{% block content %}
+    <div style="padding: 100px 100px 10px;">
+        <form class="bs-example bs-example-form" method='post' role="form" action="{% url 'redisView:newConn' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <span class="input-group-addon">Address</span>
+                <input name='address' type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Port</span>
+                <input name='port' type="text" class="form-control">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Auth</span>
+                <input name='password' type="text" class="form-control">
+            </div>
+            </br>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+{% endblock content %}

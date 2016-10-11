@@ -1,0 +1,112 @@
+{% extends 'redisView/base.html' %}
+
+
+
+{% block content %}
+    <script>
+        function getValuesByKey(key, pageIndex, pageSize) {
+            $.ajax({
+                type: "get",
+                url: "{% url 'redisView:redisKeyValues' rd.id %}",
+                data: {'key': key, 'pageIndex': pageIndex, 'pageSize': pageSize},
+                dataType: "json",
+                success: function (data) {
+                    type = data['dataType']
+                    $("#dataValues").empty();
+                    $("#dataType").text('Data Type : ' + type);
+                    switch (type) {
+                        case "string":
+                            $("#dataValues").text(data['datas']);
+                            break;
+                        case "list":
+                            objs = data['datas'];
+                            $("#dataValues").append('<table class="table"><tbody></tbody></table>');
+                            for (var i = 0; i < objs.length; i++) {
+                                $("#dataValues tbody").append("<tr><td>" + objs[i] + "</td></li>")
+                            }
+                            break;
+                        case "set":
+                            objs = data['datas'];
+                            $("#dataValues").append('<table class="table"><tbody></tbody></table>');
+                            for (var i = 0; i < objs.length; i++) {
+                                $("#dataValues tbody").append("<tr><td>" + objs[i] + "</td></li>")
+                            }
+                            break;
+                        case "zset":
+                            objs = data['datas'];
+                            $("#dataValues").append('<table class="table"><tbody><thead><tr><th>Value</th><th>Score</th></tr></thead></tbody></table>');
+                            for (var i = 0; i < objs.length / 2; i++) {
+                                $("#dataValues tbody").append("<tr><td>" + objs[i * 2] + "</td><td>" + objs[i * 2 + 1] + "</td></li>")
+                            }
+                            break;
+                        case "hash":
+                            objs = data['datas'];
+                            $("#dataValues").append('<table class="table"><tbody><thead><tr><th>Key</th><th>Value</th></tr></thead></tbody></table>');
+                            for (var i = 0; i < objs.length / 2; i++) {
+                                $("#dataValues tbody").append("<tr><td>" + objs[i * 2] + "</td><td>" + objs[i * 2 + 1] + "</td></li>")
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
+        function getListByKey() {
+            key = $("#key").val();
+            $.ajax({
+                type: "get",
+                url: "{% url 'redisView:searchByKey' rd.id %}",
+                data: {'data': key},
+                dataType: "json",
+                success: function (datas) {
+                    $("#keyList").empty();
+                    for (var i = 0; i < datas.length; i++) {
+                        $("#keyList").append("<li><a href='javascript:void(0);' onclick='getValuesByKey(this.text, 0, 100)'>" + datas[i] + "</a></li>");
+                    }
+                }
+            });
+        }
+
+        function giveCommand() {
+            cmd = $("#exec").val();
+            $.ajax({
+                type: "get",
+                url: "{% url 'redisView:redisCmd' rd.id %}",
+                data: {'command': cmd},
+                dataType: "text",
+                success: function (data) {
+                    if (data != 'error') {
+
+                    }
+                }
+            });
+        }
+    </script>
+    <div class="col-md-2">
+        <div class="input-group">
+            <span class="input-group-addon">Query</span>
+            <input id="key" type="text" class="form-control" placeholder="*" onkeydown="if(event.keyCode==13){getListByKey()}">
+        </div>
+        </br>
+        <ul id="keyList" class="nav nav-pills nav-stacked mainView">
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div class="input-group">
+            <span class="input-group-addon">Query</span>
+            <input id="exec" type="text" class="form-control" placeholder="get" onkeydown="if(event.keyCode==13){giveCommand()}">
+        </div>
+        </br>
+        <div class="panel panel-info mainView">
+            <div class="panel-heading">
+                <h3 id="dataType" class="panel-title">Data Type</h3>
+            </div>
+            <div id="dataValues" class="panel-body">
+                Key-value will display here.......
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
