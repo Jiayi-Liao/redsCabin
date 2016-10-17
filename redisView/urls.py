@@ -8,8 +8,9 @@ urlpatterns = [
 
     url(r'^$', views.index, name='index'),
     url(r'^newConn/$', views.newRedisConn, name='newConn'),
-    url(r'^redisDetails/([0-9]+)/$', views.redisDetails, name='detail'),
-    url(r'^redisSearch/([0-9]+)/$', views.redisKeySearch, name='searchByKey'),
-    url(r'^redisKeyValues/([0-9]+)/$', views.redisKeyValues, name='redisKeyValues'),
-    url(r'^redisCmd/([0-9]+)/$', views.redisCmd, name='redisCmd'),
+    url(r'^testConn/$', views.testRedisConn, name='testRedisConn'),
+    url(r'^details/([0-9]+)/$', views.redisDetails, name='detail'),
+    url(r'^search/([0-9]+)/$', views.redisKeySearch, name='searchByKey'),
+    url(r'^KeyValues/([0-9]+)/$', views.redisKeyValues, name='redisKeyValues'),
+    url(r'^cmd/([0-9]+)/$', views.redisCmd, name='redisCmd'),
 ]

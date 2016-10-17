@@ -1,27 +1,67 @@
 {% extends 'redisView/base.html' %}
+{% load static %}
 
+{% block script %}
+    <link href="{% static 'redisView/css/newConn.css' %}" rel="stylesheet"/>
+    <script>
+        function testRedisConn() {
+            var address = $("input[name='address']").val();
+            var port = $("input[name='port']").val();
+            var auth = $("input[name='auth']").val();
+            $.ajax({
+                type: "get",
+                url: "{% url 'redisView:testRedisConn' %}",
+                data: {'address': address, 'port': port, 'auth': auth},
+                dataType: "json",
+                success: function (data) {
+                    if (data["status"] == 1) {
+                        $("#testFlag").empty();
+                        $("#testFlag").text("测试成功");
+                    } else {
+                        $("#testFlag").empty();
+                        $("#testFlag").text("测试失败");
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock script %}
 
 
 {% block content %}
-    <div style="padding: 100px 100px 10px;">
-        <form class="bs-example bs-example-form" method='post' role="form" action="{% url 'redisView:newConn' %}">
+    <div class="login-container">
+        <form class="form-horizontal" method='post' role="form" action="{% url 'redisView:newConn' %}">
             {% csrf_token %}
-            <div class="input-group">
-                <span class="input-group-addon">Address</span>
-                <input name='address' type="text" class="form-control">
+            <div class="form-group">
+                <label class="col-md-4 control-label">服务器地址</label>
+                <div class="col-md-4">
+                    <input name="address" type="text" class="form-control" placeholder="192.168.0.1">
+                </div>
             </div>
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon">Port</span>
-                <input name='port' type="text" class="form-control">
+            <div class="form-group">
+                <label class="col-md-4 control-label">端口</label>
+                <div class="col-md-4">
+                    <input name="port" type="text" class="form-control" placeholder="6379">
+                </div>
             </div>
-            <br>
-            <div class="input-group">
-                <span class="input-group-addon">Auth</span>
-                <input name='password' type="text" class="form-control">
+            <div class="form-group">
+                <label class="col-md-4 control-label">验证密码</label>
+                <div class="col-md-4">
+                    <input name="auth" type="password" class="form-control" placeholder="******">
+                </div>
             </div>
-            </br>
-            <button type="submit" class="btn btn-default">Submit</button>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-6">
+                    <button type="submit" class="btn btn-default">建立新连接</button>
+                    <button type="button" class="btn btn-default" onclick="testRedisConn()">测试</button>
+                    <label id="testFlag" style="color:red">{% if desc %}信息错误
+
+                    {% endif %}</label>
+                </div>
+            </div>
         </form>
     </div>
 {% endblock content %}
+
+

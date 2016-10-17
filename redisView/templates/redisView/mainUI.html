@@ -1,8 +1,7 @@
 {% extends 'redisView/base.html' %}
-
-
-
-{% block content %}
+{% load static %}
+{% block script %}
+    <link href="{% static 'redisView/css/mainUI.css' %}" rel="stylesheet"/>
     <script>
         function getValuesByKey(key, pageIndex, pageSize) {
             $.ajax({
@@ -13,7 +12,7 @@
                 success: function (data) {
                     type = data['dataType']
                     $("#dataValues").empty();
-                    $("#dataType").text('Data Type : ' + type);
+                    $("#dataType").text('数据类型 : ' + type);
                     switch (type) {
                         case "string":
                             $("#dataValues").text(data['datas']);
@@ -84,10 +83,14 @@
             });
         }
     </script>
+{% endblock script %}
+
+{% block content %}
     <div class="col-md-2">
         <div class="input-group">
-            <span class="input-group-addon">Query</span>
-            <input id="key" type="text" class="form-control" placeholder="*" onkeydown="if(event.keyCode==13){getListByKey()}">
+            <span class="input-group-addon">查询</span>
+            <input id="key" type="text" class="form-control" placeholder="*"
+                   onkeydown="if(event.keyCode==13){getListByKey()}">
         </div>
         </br>
         <ul id="keyList" class="nav nav-pills nav-stacked mainView">
@@ -95,16 +98,17 @@
     </div>
     <div class="col-md-10">
         <div class="input-group">
-            <span class="input-group-addon">Query</span>
-            <input id="exec" type="text" class="form-control" placeholder="get" onkeydown="if(event.keyCode==13){giveCommand()}">
+            <span class="input-group-addon">命令</span>
+            <input id="exec" type="text" class="form-control" placeholder="修改 、删除、添加命令在此输入......"
+                   onkeydown="if(event.keyCode==13){giveCommand()}">
         </div>
         </br>
         <div class="panel panel-info mainView">
             <div class="panel-heading">
-                <h3 id="dataType" class="panel-title">Data Type</h3>
+                <h3 id="dataType" class="panel-title">数据类型</h3>
             </div>
             <div id="dataValues" class="panel-body">
-                Key-value will display here.......
+                键值数据在此展示.......
             </div>
         </div>
     </div>

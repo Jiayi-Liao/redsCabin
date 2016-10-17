@@ -3,15 +3,43 @@
 
 <html>
 <head>
-    <link href="{% static 'redisView/css/bootstrap.min.css' %}" rel="stylesheet"/>
-    <link href="{% static 'redisView/css/mainUI.css' %}" rel="stylesheet"/>
     <script src="{% static 'redisView/js/jquery-2.2.2.js' %} "></script>
+    <script src="{% static 'redisView/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'redisView/css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'redisView/css/base.css' %}" rel="stylesheet"/>
+    {% block script %}{% endblock %}
 </head>
 <body>
-<div class="page-header">
-    <h1><a href="/">RedsUI</a></h1>
+<title>RedsCabin网页终端</title>
+<div class="page-header base-header">
+    <div>
+        <h1 style="width:200px;float:left"><a style="color:whitesmoke" href="/">RedsUI</a></h1>
+        <div class="dropdown conn-control" style="width:200px;float:left">
+            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                    style="color:black">连接列表
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                {% for o in connList %}
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1"
+                           href="{% url 'redisView:detail' o.id %}">redis@{{ o.address }}:{{ o.port }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% comment %}        <select class="form-control select conn-control" style="width:200px;float:left">
+            <option value=""></option>
+            {% for o in connList %}
+                <option><a href="{% url 'redisView:detail' o.id %}">redis@{{ o.address }}:{{ o.port }}</a>
+                </option>
+            {% endfor %}
+
+        </select>{% endcomment %}
+    </div>
 </div>
-<div class="content">
+
+<div class="content" style="margin-top:10px">
     <div class="row">
         <div class="col-md-12">
             {% block content %}

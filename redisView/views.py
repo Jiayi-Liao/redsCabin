@@ -5,25 +5,40 @@ from django.urls import reverse
 import datetime
 import redis
 import json
-
+from redisView.helpers import redis_helper
+from django.template import Context, Template
 
 # Create your views here.
 def index(request):
-    return render(request, 'redisView/index.html')
+    objs = RedisConn.objects.all()
+    return render(request, 'redisView/index.html', Context({"connList":objs}))
 
 
 def newRedisConn(request):
     address = request.POST['address']
     port = request.POST['port']
-    password = request.POST['password']
-    redisConn = RedisConn(address=address, port=port, auth=password, pub_date=datetime.datetime.now())
-    redisConn.save()
-    return HttpResponseRedirect(reverse('redisView:detail', args=(redisConn.id,)))
+    password = request.POST['auth']
+    status = redis_helper.testRedisConn(address, port, password)
+    if status == 1:
+        redisConn = RedisConn(address=address, port=port, auth=password, pub_date=datetime.datetime.now())
+        redisConn.save()
+        return HttpResponseRedirect(reverse('redisView:detail', args=(redisConn.id,)))
+    else:
+        return render(request, 'redisView/index.html', {'desc': 'error'})
+
+
+def testRedisConn(request):
+    address = request.GET['address']
+    port = request.GET['port']
+    password = request.GET['auth']
+    status = redis_helper.testRedisConn(address, port, password)
+    return HttpResponse(json.dumps({"status": status}))
 
 
 def redisDetails(request, redisConn_id):
+    objs = RedisConn.objects.all()
     redisConn = get_object_or_404(RedisConn, pk=redisConn_id)
-    return render(request, 'redisView/mainUI.html', {'rd': redisConn})
+    return render(request, 'redisView/mainUI.html', Context({'rd': redisConn,'connList':objs}))
 
 
 def redisKeySearch(request, redisConn_id):
