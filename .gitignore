@@ -1,9 +1,4 @@
 *.pyc
-<<<<<<< HEAD
 .idea/
 *.sqlite3
 production.py
-=======
-*.sqlite3
-.idea
->>>>>>> d3441290eb2f84082c2c9e76b5eb03f4a82731b2
