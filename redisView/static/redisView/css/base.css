@@ -1,0 +1,18 @@
+
+
+
+
+
+.base-header{
+    height:100px;
+    padding:10px;
+    margin:0px;
+    background:deepskyblue;
+    color:whitesmoke;
+    border-radius:5px;
+}
+
+.conn-control{
+    margin-top:20px;
+    margin-bottom:10px;
+}
