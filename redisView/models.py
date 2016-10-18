@@ -14,3 +14,6 @@ class RedisConn(models.Model):
     port = models.CharField(max_length=200)
     auth = models.CharField(max_length=2048)
     pub_date = models.DateTimeField('date published')
+
+    class Meta:
+        unique_together = ('address', 'port')
