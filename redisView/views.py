@@ -14,7 +14,7 @@ from django.db import IntegrityError
 # Create your views here.
 def index(request):
     objs = RedisConn.objects.all()
-    return render(request, 'redisView/index.html', Context({"connList": objs}))
+    return render(request, 'redisView/index.html', {"connList": objs})
 
 
 def newRedisConn(request):
@@ -43,7 +43,7 @@ def testRedisConn(request):
 def redisDetails(request, redisConn_id):
     objs = RedisConn.objects.all()
     redisConn = get_object_or_404(RedisConn, pk=redisConn_id)
-    return render(request, 'redisView/mainUI.html', Context({'rd': redisConn, 'connList': objs}))
+    return render(request, 'redisView/mainUI.html', {'rd': redisConn, 'connList': objs})
 
 
 def redisKeySearch(request, redisConn_id):
