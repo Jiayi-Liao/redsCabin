@@ -52,13 +52,17 @@ def redisKeySearch(request, redisConn_id):
     r = redis.Redis(host=redisConn.address, port=redisConn.port, db=0, password=redisConn.auth)
     start = int(time.time() % 100)
     datas = []
-    for i in range(1, 20, 1):
-        rep = r.scan(start, key, 10000)
-        start = rep[0]
-        results = rep[1]
-        print(start)
-        if len(results) > 0:
-            datas.extend(results)
+    if "*" in key:
+        for i in range(1, 20, 1):
+            rep = r.scan(start, key, 50000)
+            start = rep[0]
+            results = rep[1]
+            print(start)
+            if len(results) > 0:
+                datas.extend(results)
+    else:
+        if r.exists(key):
+            datas.append(key)
     return HttpResponse(json.dumps(datas))
 
 
@@ -70,7 +74,10 @@ def redisKeyValues(request, redisConn_id):
     r = redis.Redis(host=redisConn.address, port=redisConn.port, db=0, password=redisConn.auth)
     type = r.execute_command('TYPE ' + key)
     if type == 'string':
-        data = r.execute_command('get ' + key)
+        try:
+            data = r.pfcount(key)
+        except:
+            data = r.execute_command('get ' + key)
     elif type == 'list':
         data = r.execute_command('lrange ' + key + ' 0 -1')
     elif type == 'set':
