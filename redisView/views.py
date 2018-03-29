@@ -9,7 +9,7 @@ import json
 from redisView.helpers import redis_helper
 from django.template import Context, Template
 from django.db import IntegrityError
-
+import time
 
 # Create your views here.
 def index(request):
@@ -50,7 +50,15 @@ def redisKeySearch(request, redisConn_id):
     key = request.GET['data']
     redisConn = get_object_or_404(RedisConn, pk=redisConn_id)
     r = redis.Redis(host=redisConn.address, port=redisConn.port, db=0, password=redisConn.auth)
-    datas = r.execute_command('KEYS ' + key)
+    start = int(time.time() % 100)
+    datas = []
+    for i in range(1, 20, 1):
+        rep = r.scan(start, key, 10000)
+        start = rep[0]
+        results = rep[1]
+        print(start)
+        if len(results) > 0:
+            datas.extend(results)
     return HttpResponse(json.dumps(datas))
 
 
