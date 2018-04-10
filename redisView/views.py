@@ -94,7 +94,7 @@ def redisKeyValues(request, redisConn_id):
         if len(data) > 100:
             for k in dict(data).keys()[:100]:
                 result[k] = data[k]
-        data = result
+            data = result
     return HttpResponse(json.dumps({"dataType": type, "datas": data}))
 
 
