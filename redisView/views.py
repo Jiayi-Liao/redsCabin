@@ -90,6 +90,11 @@ def redisKeyValues(request, redisConn_id):
         data = r.execute_command('zrange ' + key + ' 0 -1 withscores')
     elif type == 'hash':
         data = r.execute_command('hgetall ' + key)
+        result = {}
+        if len(data) > 100:
+            for k in dict(data).keys()[:100]:
+                result[k] = data[k]
+        data = result
     return HttpResponse(json.dumps({"dataType": type, "datas": data}))
 
 
