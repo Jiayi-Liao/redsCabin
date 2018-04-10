@@ -1,0 +1,33 @@
+[10/Apr/2018 16:37:40] "GET / HTTP/1.1" 200 3782
+[10/Apr/2018 16:37:40] "GET /static/redisView/css/base.css HTTP/1.1" 200 208
+[10/Apr/2018 16:37:40] "GET /static/redisView/css/newConn.css HTTP/1.1" 200 61
+[10/Apr/2018 16:37:40] "GET /static/redisView/js/bootstrap.min.js HTTP/1.1" 200 36816
+[10/Apr/2018 16:37:40] "GET /static/redisView/css/bootstrap.min.css HTTP/1.1" 200 122540
+[10/Apr/2018 16:37:40] "GET /static/redisView/js/jquery-2.2.2.js HTTP/1.1" 200 268490
+Not Found: /favicon.ico
+[10/Apr/2018 16:37:40] "GET /favicon.ico HTTP/1.1" 404 3199
+[10/Apr/2018 16:37:42] "GET /details/1/ HTTP/1.1" 200 6098
+[10/Apr/2018 16:37:42] "GET /static/redisView/css/mainUI.css HTTP/1.1" 200 53
+[10/Apr/2018 16:37:48] "GET /search/1/?data=* HTTP/1.1" 200 3426
+[10/Apr/2018 16:37:49] "GET /KeyValues/1/?key=stock%3Adaily%3Ab%27300077%27%3A2018-04-03&pageIndex=0&pageSize=100 HTTP/1.1" 200 77
+[10/Apr/2018 16:38:07] "GET /search/1/?data=stock%3Adaily*%3A2018-04-10 HTTP/1.1" 200 3300
+[10/Apr/2018 16:38:09] "GET /KeyValues/1/?key=stock%3Adaily%3A002055%3A2018-04-10&pageIndex=0&pageSize=100 HTTP/1.1" 200 195
+[10/Apr/2018 16:38:23] "GET /KeyValues/1/?key=stock%3Adaily%3A002482%3A2018-04-10&pageIndex=0&pageSize=100 HTTP/1.1" 200 192
+[10/Apr/2018 16:38:24] "GET /KeyValues/1/?key=stock%3Adaily%3A002102%3A2018-04-10&pageIndex=0&pageSize=100 HTTP/1.1" 200 193
+[10/Apr/2018 16:38:24] "GET /KeyValues/1/?key=stock%3Adaily%3A000739%3A2018-04-10&pageIndex=0&pageSize=100 HTTP/1.1" 200 192
+[10/Apr/2018 16:48:05] "GET / HTTP/1.1" 200 3782
+[10/Apr/2018 16:50:58] "GET / HTTP/1.1" 200 3782
+[10/Apr/2018 16:51:03] "GET /static/redisView/css/base.css HTTP/1.1" 200 208
+[10/Apr/2018 16:51:03] "GET /static/redisView/js/bootstrap.min.js HTTP/1.1" 200 36816
+[10/Apr/2018 16:51:03] "GET /static/redisView/css/newConn.css HTTP/1.1" 200 61
+[10/Apr/2018 16:51:03] "GET /static/redisView/js/jquery-2.2.2.js HTTP/1.1" 200 268490
+[10/Apr/2018 16:51:03] "GET /static/redisView/css/bootstrap.min.css HTTP/1.1" 200 122540
+Not Found: /favicon.ico
+[10/Apr/2018 16:51:03] "GET /favicon.ico HTTP/1.1" 404 3199
+[10/Apr/2018 16:51:05] "GET /details/1/ HTTP/1.1" 200 6098
+[10/Apr/2018 16:51:05] "GET /static/redisView/css/mainUI.css HTTP/1.1" 200 53
+[10/Apr/2018 16:51:11] "GET /search/1/?data=stock* HTTP/1.1" 200 3420
+[10/Apr/2018 16:51:11] "GET /KeyValues/1/?key=stock%3Adaily%3A002549%3A2018-04-04&pageIndex=0&pageSize=100 HTTP/1.1" 200 325
+[10/Apr/2018 16:51:28] "GET /search/1/?data=stock%3Alist* HTTP/1.1" 200 1875
+[10/Apr/2018 16:51:37] "GET /KeyValues/1/?key=stock%3Alist%3A2018-04-09&pageIndex=0&pageSize=100 HTTP/1.1" 200 130400
+[10/Apr/2018 16:51:43] "GET /KeyValues/1/?key=stock%3Alist%3A2018-04-03&pageIndex=0&pageSize=100 HTTP/1.1" 200 130330
