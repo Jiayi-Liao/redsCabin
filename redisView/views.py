@@ -63,6 +63,8 @@ def redisKeySearch(request, redisConn_id):
     else:
         if r.exists(key):
             datas.append(key)
+    if len(datas) > 100:
+        datas = datas[:100]
     return HttpResponse(json.dumps(datas))
 
 
@@ -80,6 +82,8 @@ def redisKeyValues(request, redisConn_id):
             data = r.execute_command('get ' + key)
     elif type == 'list':
         data = r.execute_command('lrange ' + key + ' 0 -1')
+        if list(data) > 100:
+            data = list(data)[:100]
     elif type == 'set':
         data = r.execute_command('smembers ' + key)
     elif type == 'zset':
