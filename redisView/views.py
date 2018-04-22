@@ -54,7 +54,7 @@ def redisKeySearch(request, redisConn_id):
     datas = []
     if "*" in key:
         for i in range(1, 20, 1):
-            rep = r.scan(start, key, 50000)
+            rep = r.scan(start, key, 500)
             start = rep[0]
             results = rep[1]
             print(start)
@@ -63,6 +63,7 @@ def redisKeySearch(request, redisConn_id):
     else:
         if r.exists(key):
             datas.append(key)
+    datas = list(set(datas))
     if len(datas) > 100:
         datas = datas[:100]
     return HttpResponse(json.dumps(datas))
@@ -70,8 +71,6 @@ def redisKeySearch(request, redisConn_id):
 
 def redisKeyValues(request, redisConn_id):
     key = request.GET['key']
-    pageIndex = request.GET['pageIndex']
-    pageSize = request.GET['pageSize']
     redisConn = get_object_or_404(RedisConn, pk=redisConn_id)
     r = redis.Redis(host=redisConn.address, port=redisConn.port, db=0, password=redisConn.auth)
     type = r.execute_command('TYPE ' + key)
@@ -91,7 +90,7 @@ def redisKeyValues(request, redisConn_id):
     elif type == 'hash':
         data = r.execute_command('hgetall ' + key)
         result = {}
-        if len(data) > 100:
+        if len(dict(data)) > 100:
             for k in dict(data).keys()[:100]:
                 result[k] = data[k]
             data = result
